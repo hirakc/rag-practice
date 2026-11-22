@@ -1,0 +1,29 @@
+# All tunables live here. Every eval run snapshots this whole file.
+data_dir: data
+
+models:
+  ollama_host: http://localhost:11434
+  chat: qwen3:14b
+  embed: bge-m3
+  judge: qwen3:14b            # model used to grade eval answers
+  reranker: BAAI/bge-reranker-v2-m3
+  think: false                # disable "thinking" for reasoning models (qwen3 etc.)
+
+ingest:
+  chunk_target_tokens: 650    # aim for this size
+  chunk_max_tokens: 800       # never exceed (except one oversized sentence)
+  chunk_overlap_tokens: 80    # carried over between chunks of the same section
+  formula_enrichment: true    # Docling: convert equations to LaTeX (slower)
+  embed_batch_size: 32
+
+retrieval:
+  hybrid: true                # BM25 + vector, fused with RRF; false = vector only
+  candidates: 30              # per retriever, before fusion/rerank
+  top_k: 6                    # chunks passed to the LLM
+  rrf_k: 60
+  use_reranker: true
+
+generation:
+  temperature: 0.1
+  num_ctx: 8192            # 6 chunks + prompt ≈ 3-4k tokens; smaller = less memory
+  prompt_version: v1

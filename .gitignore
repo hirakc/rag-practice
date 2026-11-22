@@ -1,0 +1,9 @@
+# data: papers, index, logs
+data/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.gradio/
+.agents/
+.claude/
